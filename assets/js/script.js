@@ -1,12 +1,17 @@
-let playerHealth = 20;
-let enemyHealth = 20;
-let currentRound = 1;
+let playerHealth = 100;
+let enemyHealth = 100;
+let turnCounter = 1;
 
 let deck = [
-	{ name: "Attack", damage: 3 },
-	{ name: "Attack", damage: 3 },
-	{ name: "Block", block: 3 },
-	{ name: "Heal", heal: 2 },
+	{ name: "Attack", damage: 15 },
+	{ name: "Attack", damage: 15 },
+	{ name: "Block", block: 8 },
+	{ name: "Heal", heal: 8 },
+	{ name: "doubleAttack", damage: 22 },
+	{ name: "heavyAttack", damage: 30 },	// skip turn..?
+	{ name: "Draw", draw: 2},	
+	{ name: "Draw", draw: 2},
+	{ name: "Weaken", enemyWeaken: -10 },
 ];
 
 let hand = [];
@@ -60,6 +65,34 @@ function renderHand() {
 			cardDiv.appendChild(healStat);
 		}
 
+		if (card.draw) {
+			let drawText = document.createElement("p");
+			drawText.className = "card-text mb-0 small";
+			drawText.innerText = `Draw: ${card.draw}`;
+			cardBody.appendChild(drawText);
+		}
+
+		if (card.enemyWeaken) {
+			let weakenText = document.createElement("p");
+			weakenText.className = "card-text mb-0 small";
+			weakenText.innerText = `Weaken Enemy: ${-card.enemyWeaken}`;
+			cardBody.appendChild(weakenText);
+		}
+
+		if (card.heavyAttack) {
+			let heavyText = document.createElement("p");
+			heavyText.className = "card-text mb-0 small";
+			heavyText.innerText = `Skip Enemy Turn`;
+			cardBody.appendChild(heavyText);
+		}
+
+		if (card.doubleAttack) {
+			let doubleText = document.createElement("p");
+			doubleText.className = "card-text mb-0 small";
+			doubleText.innerText = `Damage: ${card.damage} (Double Next Attack)`;
+			cardBody.appendChild(doubleText);
+		}
+
 		cardsDiv.appendChild(cardDiv);
 	});
 }
@@ -75,6 +108,16 @@ function playCard(index) {
 		playerHealth += card.heal;
 	}
 
+		if (card.draw) {
+		for (let i = 0; i < card.draw; i++) {
+			drawCard();
+		}
+	}
+
+	if (card.enemyWeaken) {
+		// % decrease enemy damage next turn
+	}
+
 	hand.splice(index, 1);
 	updateUI();
 	renderHand();
@@ -83,9 +126,8 @@ function playCard(index) {
 
 function endTurn() {
 	// enemy attacks
-	playerHealth -= 2;
+	playerHealth -= 15; // fixed damage for now, can be randomized or based on enemy cards later
 
-    currentRound++;
 	drawCard();
 	updateUI();
 	checkGameEnd();
@@ -97,18 +139,20 @@ function updateUI() {
 	document.getElementById("enemy-health").innerText = enemyHealth;
 	
 	// Update health bars (0-20)
-	const maxHealth = 20;
+	const maxHealth = 100;
 	const playerHealthPercent = Math.max(0, (playerHealth / maxHealth) * 100);
 	const enemyHealthPercent = Math.max(0, (enemyHealth / maxHealth) * 100);
 	
 	document.getElementById("player-health-bar").style.width = playerHealthPercent + "%";
 	document.getElementById("enemy-health-bar").style.width = enemyHealthPercent + "%";
 	
+
+	
 	// Update card count
 	document.getElementById("card-count").innerText = hand.length;
 
-    // Update round counter
-    document.getElementById("round-number").innerText = currentRound;
+	turnCounter++;
+	document.getElementById("turn-counter").innerText = turnCounter;
 }
 
 function checkGameEnd() {
