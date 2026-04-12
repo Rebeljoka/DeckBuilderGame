@@ -1,5 +1,5 @@
-let playerHealth = 20;
-let enemyHealth = 20;
+let playerHealth = 100;
+let enemyHealth = 100;
 let currentRound = 1;
 
 let deck = [
@@ -69,28 +69,28 @@ function renderHand() {
 			let drawText = document.createElement("p");
 			drawText.className = "card-text mb-0 small";
 			drawText.innerText = `Draw: ${card.draw}`;
-			cardBody.appendChild(drawText);
+			cardDiv.appendChild(drawText);
 		}
 
 		if (card.enemyWeaken) {
 			let weakenText = document.createElement("p");
 			weakenText.className = "card-text mb-0 small";
 			weakenText.innerText = `Weaken Enemy: ${-card.enemyWeaken}`;
-			cardBody.appendChild(weakenText);
+			cardDiv.appendChild(weakenText);
 		}
 
 		if (card.heavyAttack) {
 			let heavyText = document.createElement("p");
 			heavyText.className = "card-text mb-0 small";
 			heavyText.innerText = `Skip Enemy Turn`;
-			cardBody.appendChild(heavyText);
+			cardDiv.appendChild(heavyText);
 		}
 
 		if (card.doubleAttack) {
 			let doubleText = document.createElement("p");
 			doubleText.className = "card-text mb-0 small";
 			doubleText.innerText = `Damage: ${card.damage} (Double Next Attack)`;
-			cardBody.appendChild(doubleText);
+			cardDiv.appendChild(doubleText);
 		}
 
 		cardsDiv.appendChild(cardDiv);
@@ -128,7 +128,7 @@ function endTurn() {
 	// enemy attacks
 	playerHealth -= 15; // fixed damage for now, can be randomized or based on enemy cards later
 
-    currentRound++;
+  currentRound++;
 	drawCard();
 	updateUI();
 	checkGameEnd();
@@ -159,12 +159,30 @@ function updateUI() {
 function checkGameEnd() {
 	if (playerHealth <= 0) {
 		alert("You Lose!");
+		restartGame();
 	} else if (enemyHealth <= 0) {
 		alert("You Win!");
+		restartGame();
 	}
 }
 
-// start game
-drawCard();
-drawCard();
-updateUI();
+function startGame() {
+	// Draw 2 cards to start
+	drawCard();
+	drawCard();
+	updateUI();
+	
+	// Hide start button and show end turn button
+	document.getElementById("start-btn").style.display = "none";
+	document.getElementById("end-turn-btn").style.display = "block";
+}
+
+function restartGame() {
+	playerHealth = 100;
+	enemyHealth = 100;
+	currentRound = 1;
+	hand = [];
+	updateUI();
+	drawCard();
+	drawCard();
+}
