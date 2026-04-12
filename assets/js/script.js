@@ -23,42 +23,41 @@ function renderHand() {
 
 	hand.forEach((card, index) => {
 		let cardDiv = document.createElement("div");
-		cardDiv.className = "card bg-primary text-white";
-		cardDiv.style.width = "120px";
-		cardDiv.style.cursor = "pointer";
+		
+		// Determine card type for styling
+		let cardType = "default";
+		if (card.damage) cardType = "attack";
+		if (card.heal) cardType = "heal";
+		if (card.block) cardType = "block";
+		
+		cardDiv.className = `card-item ${cardType}`;
+		cardDiv.onclick = () => playCard(index);
 
-		let cardBody = document.createElement("div");
-		cardBody.className = "card-body p-2";
-
-		let cardTitle = document.createElement("h6");
-		cardTitle.className = "card-title mb-2";
-		cardTitle.innerText = card.name;
-
-		cardBody.appendChild(cardTitle);
+		let cardName = document.createElement("div");
+		cardName.className = "card-name";
+		cardName.innerText = card.name;
+		cardDiv.appendChild(cardName);
 
 		if (card.damage) {
-			let damageText = document.createElement("p");
-			damageText.className = "card-text mb-0 small";
-			damageText.innerText = `Damage: ${card.damage}`;
-			cardBody.appendChild(damageText);
+			let damageStat = document.createElement("div");
+			damageStat.className = "card-stat";
+			damageStat.innerText = `⚔️ ${card.damage} Damage`;
+			cardDiv.appendChild(damageStat);
 		}
 
 		if (card.block) {
-			let blockText = document.createElement("p");
-			blockText.className = "card-text mb-0 small";
-			blockText.innerText = `Block: ${card.block}`;
-			cardBody.appendChild(blockText);
+			let blockStat = document.createElement("div");
+			blockStat.className = "card-stat";
+			blockStat.innerText = `🛡️ ${card.block} Block`;
+			cardDiv.appendChild(blockStat);
 		}
 
 		if (card.heal) {
-			let healText = document.createElement("p");
-			healText.className = "card-text mb-0 small";
-			healText.innerText = `Heal: ${card.heal}`;
-			cardBody.appendChild(healText);
+			let healStat = document.createElement("div");
+			healStat.className = "card-stat";
+			healStat.innerText = `💚 ${card.heal} Heal`;
+			cardDiv.appendChild(healStat);
 		}
-
-		cardDiv.appendChild(cardBody);
-		cardDiv.onclick = () => playCard(index);
 
 		cardsDiv.appendChild(cardDiv);
 	});
@@ -91,8 +90,20 @@ function endTurn() {
 }
 
 function updateUI() {
+	// Update health values
 	document.getElementById("player-health").innerText = playerHealth;
 	document.getElementById("enemy-health").innerText = enemyHealth;
+	
+	// Update health bars (0-20)
+	const maxHealth = 20;
+	const playerHealthPercent = Math.max(0, (playerHealth / maxHealth) * 100);
+	const enemyHealthPercent = Math.max(0, (enemyHealth / maxHealth) * 100);
+	
+	document.getElementById("player-health-bar").style.width = playerHealthPercent + "%";
+	document.getElementById("enemy-health-bar").style.width = enemyHealthPercent + "%";
+	
+	// Update card count
+	document.getElementById("card-count").innerText = hand.length;
 }
 
 function checkGameEnd() {
