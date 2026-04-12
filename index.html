@@ -76,7 +76,11 @@
 
 					<!-- Action Buttons -->
 					<div class="action-buttons">
-						<button class="btn btn-primary btn-action btn-end-turn" onclick="endTurn()">
+						<button id="start-btn" class="btn btn-success btn-action btn-start-game" onclick="startGame()">
+							<span>Start Game</span>
+							<span class="btn-icon">⚔️</span>
+						</button>
+						<button id="end-turn-btn" class="btn btn-primary btn-action btn-end-turn" onclick="endTurn()" style="display: none;">
 							<span>End Turn</span>
 							<span class="btn-icon">→</span>
 						</button>
