@@ -1,6 +1,6 @@
-let playerHealth = 100;
-let enemyHealth = 100;
-let turnCounter = 1;
+let playerHealth = 20;
+let enemyHealth = 20;
+let currentRound = 1;
 
 let deck = [
 	{ name: "Attack", damage: 15 },
@@ -128,6 +128,7 @@ function endTurn() {
 	// enemy attacks
 	playerHealth -= 15; // fixed damage for now, can be randomized or based on enemy cards later
 
+    currentRound++;
 	drawCard();
 	updateUI();
 	checkGameEnd();
@@ -151,8 +152,8 @@ function updateUI() {
 	// Update card count
 	document.getElementById("card-count").innerText = hand.length;
 
-	turnCounter++;
-	document.getElementById("turn-counter").innerText = turnCounter;
+    // Update round counter
+    document.getElementById("round-number").innerText = currentRound;
 }
 
 function checkGameEnd() {
