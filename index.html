@@ -39,7 +39,14 @@
 				<!-- Battle Arena -->
 				<section class="battle-arena">
 					<div class="arena-divider"></div>
-					<p class="turn-indicator">Your Turn</p>
+					<div class="arena-info">
+						<div class="round-counter">
+							<span class="round-label">Round</span>
+							<span id="round-number" class="round-value">1</span>
+						</div>
+						<p class="turn-indicator">Your Turn</p>
+					</div>
+					<div class="arena-divider"></div>
 				</section>
 
 				<!-- Player Section -->
@@ -57,23 +64,23 @@
 						</div>
 						<div class="player-avatar player-avatar-main">👤</div>
 					</div>
-				</section>
 
-				<!-- Hand Section -->
-				<section class="hand-section">
-					<div class="hand-header">
-						<h3 class="hand-title">Your Hand</h3>
-						<span class="card-count"><span id="card-count">0</span> Cards</span>
+					<!-- Hand Section -->
+					<div class="hand-section">
+						<div class="hand-header">
+							<h3 class="hand-title">Your Hand</h3>
+							<span class="card-count"><span id="card-count">0</span> Cards</span>
+						</div>
+						<div id="cards" class="cards-container"></div>
 					</div>
-					<div id="cards" class="cards-container"></div>
-				</section>
 
-				<!-- Action Buttons -->
-				<section class="action-buttons">
-					<button class="btn btn-primary btn-action btn-end-turn" onclick="endTurn()">
-						<span>End Turn</span>
-						<span class="btn-icon">→</span>
-					</button>
+					<!-- Action Buttons -->
+					<div class="action-buttons">
+						<button class="btn btn-primary btn-action btn-end-turn" onclick="endTurn()">
+							<span>End Turn</span>
+							<span class="btn-icon">→</span>
+						</button>
+					</div>
 				</section>
 			</main>
 		</div>

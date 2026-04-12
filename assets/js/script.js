@@ -1,5 +1,6 @@
 let playerHealth = 20;
 let enemyHealth = 20;
+let currentRound = 1;
 
 let deck = [
 	{ name: "Attack", damage: 3 },
@@ -84,6 +85,7 @@ function endTurn() {
 	// enemy attacks
 	playerHealth -= 2;
 
+    currentRound++;
 	drawCard();
 	updateUI();
 	checkGameEnd();
@@ -104,6 +106,9 @@ function updateUI() {
 	
 	// Update card count
 	document.getElementById("card-count").innerText = hand.length;
+
+    // Update round counter
+    document.getElementById("round-number").innerText = currentRound;
 }
 
 function checkGameEnd() {
