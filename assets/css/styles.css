@@ -28,6 +28,7 @@ body {
 	color: var(--text-primary);
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	min-height: 100vh;
+	max-width: 100vw;
 	overflow-x: hidden;
 }
 
@@ -37,6 +38,7 @@ body {
 
 .game-container {
 	min-height: 100vh;
+	min-width: 100vw;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
@@ -222,18 +224,42 @@ body {
    ============================================ */
 
 .battle-arena {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-template-rows: auto auto;
 	gap: 20px;
 	padding: 20px;
 	position: relative;
+	align-items: start;
+	justify-items: center;
+}
+
+.battle-arena > :nth-child(1) {
+	grid-column: 1;
+	grid-row: 1 / 3;
+}
+
+.battle-arena > :nth-child(2) {  /* arena-info */
+	grid-column: 2;
+	grid-row: 1;
+}
+
+.battle-arena > :nth-child(3) {
+	grid-column: 3;
+	grid-row: 1 / 3;
+}
+
+.battle-arena > :nth-child(4) {  /* action-buttons */
+	grid-column: 2;
+	grid-row: 2;
+	width: 100%;
+	justify-self: stretch;
 }
 
 .arena-divider {
-	flex: 1;
-	height: 2px;
-	background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+	width: 2px;
+	height: 100%;
+	background: linear-gradient(180deg, transparent, var(--primary-color), transparent);
 	border-radius: 1px;
 	box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
 }
@@ -243,6 +269,7 @@ body {
 	flex-direction: column;
 	align-items: center;
 	gap: 16px;
+	width: 100%;
 }
 
 .round-counter {
@@ -600,16 +627,70 @@ body {
 }
 
 /* ============================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN - TABLET (768px - 991px)
    ============================================ */
 
-@media (max-width: 768px) {
+@media (min-width: 768px) and (max-width: 991px) {
+	.game-board {
+		flex-direction: column;
+		gap: 20px;
+	}
+}
+
+@media (max-width: 991px) {
+	.game-board {
+		flex-direction: column;
+		gap: 20px;
+		align-items: stretch;
+		min-height: auto;
+	}
+
+	.player-section,
+	.battle-arena {
+		width: 100%;
+		max-width: 100%;
+	}
+
 	.game-title {
-		font-size: 2.5rem;
+		font-size: 2.8rem;
 	}
 
 	.game-subtitle {
 		font-size: 1rem;
+	}
+
+	.game-container {
+		padding: 16px;
+		max-width: 100%;
+	}
+
+	.game-header {
+		padding: 30px 20px;
+		margin-bottom: 30px;
+	}
+
+	.battle-arena {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.battle-arena > :nth-child(1),
+	.battle-arena > :nth-child(3) {
+		display: none;
+	}
+
+	.battle-arena > :nth-child(2) {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.battle-arena > :nth-child(4) {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.arena-divider {
+		display: none;
 	}
 
 	.player-info {
@@ -620,18 +701,12 @@ body {
 	.player-avatar {
 		width: 80px;
 		height: 80px;
-		font-size: 3.5rem;
+		font-size: 3rem;
 		order: -1;
 	}
 
-	.cards-container {
-		justify-content: center;
-		gap: 12px;
-	}
-
-	.card-item {
-		width: 140px;
-		padding: 16px;
+	.health-container {
+		min-width: auto;
 	}
 
 	.hand-header {
@@ -640,45 +715,55 @@ body {
 		align-items: flex-start;
 	}
 
+	.cards-container {
+		gap: 12px;
+		min-height: auto;
+	}
+
+	.card-item {
+		width: 130px;
+		padding: 14px;
+	}
+
 	.btn-action {
 		padding: 12px 24px;
-		font-size: 1rem;
 		min-width: auto;
 		width: 100%;
+		font-size: 1rem;
+	}
+
+	.btn-end-turn {
+		min-width: auto;
+	}
+
+	.action-buttons {
+		gap: 12px;
+		padding: 20px 0;
+		margin-top: 20px;
 	}
 }
 
-@media (max-width: 480px) {
-	.game-container {
-		padding: 12px;
-	}
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE LANDSCAPE (576px)
+   ============================================ */
 
-	.game-header {
-		padding: 24px 16px;
-		margin-bottom: 24px;
-	}
-
-	.game-title {
-		font-size: 2rem;
-	}
-
-	.game-subtitle {
-		font-size: 0.9rem;
-	}
-
+@media (max-width: 768px) {
 	.player-section {
 		padding: 20px;
-		gap: 20px;
+	}
+
+	.round-counter {
+		padding: 10px 20px;
+		min-width: 90px;
+	}
+
+	.card-item {
+		width: 120px;
+		padding: 12px;
 	}
 
 	.hand-title {
 		font-size: 1.2rem;
-	}
-
-	.card-item {
-		width: 110px;
-		padding: 10px;
-		gap: 8px;
 	}
 
 	.card-name {
@@ -688,6 +773,206 @@ body {
 	.card-stat {
 		padding: 6px 10px;
 		font-size: 0.85rem;
+	}
+
+	.action-log {
+		max-width: 100%;
+		min-width: auto;
+		font-size: 0.85rem;
+	}
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE PORTRAIT (480px)
+   ============================================ */
+
+@media (max-width: 576px) {
+	.game-container {
+		padding: 12px;
+		min-height: 100vh;
+		min-width: 100vw;
+	}
+
+	.game-header {
+		padding: 20px 12px;
+		margin-bottom: 20px;
+		border-radius: 12px;
+	}
+
+	.game-title {
+		font-size: 1.8rem;
+		margin-bottom: 8px;
+	}
+
+	.game-subtitle {
+		font-size: 0.85rem;
+	}
+
+	.btn-start-game {
+		width: 100%;
+		padding: 10px 16px;
+		font-size: 1rem;
+		margin-top: 16px;
+	}
+
+	.game-board {
+		gap: 16px;
+	}
+
+	.player-section {
+		padding: 16px;
+		border-radius: 16px;
+		gap: 16px;
+	}
+
+	.player-label {
+		font-size: 1.2rem;
+		margin-bottom: 10px;
+	}
+
+	.player-info {
+		gap: 16px;
+		margin-bottom: 20px;
+	}
+
+	.player-avatar {
+		width: 70px;
+		height: 70px;
+		font-size: 2.5rem;
+	}
+
+	.health-bar-bg {
+		height: 40px;
+	}
+
+	.health-text {
+		font-size: 1rem;
+	}
+
+	.weaken-status {
+		font-size: 0.8rem;
+		padding: 6px 10px;
+		margin-bottom: 10px;
+	}
+
+	.hand-section {
+		margin-top: 16px;
+		padding-top: 16px;
+	}
+
+	.hand-header {
+		flex-direction: column;
+		gap: 10px;
+		align-items: flex-start;
+		margin-bottom: 12px;
+	}
+
+	.hand-title {
+		font-size: 1.1rem;
+	}
+
+	.card-count {
+		padding: 4px 12px;
+		font-size: 0.8rem;
+		width: 100%;
+		text-align: center;
+	}
+
+	.cards-container {
+		gap: 10px;
+		min-height: auto;
+		align-content: center;
+	}
+
+	.card-item {
+		width: 100px;
+		padding: 10px;
+		gap: 8px;
+		font-size: 0.75rem;
+	}
+
+	.card-name {
+		font-size: 0.9rem;
+	}
+
+	.card-stat {
+		padding: 4px 8px;
+		font-size: 0.75rem;
+	}
+
+	.enemy-cards .card-item {
+		width: 95px;
+		padding: 8px;
+	}
+
+	.battle-arena {
+		padding: 16px;
+		gap: 12px;
+		grid-template-columns: 1fr;
+		grid-template-rows: auto auto;
+	}
+
+	.arena-info {
+		gap: 12px;
+	}
+
+	.round-counter {
+		padding: 8px 16px;
+		min-width: 80px;
+		gap: 4px;
+	}
+
+	.round-label {
+		font-size: 0.8rem;
+	}
+
+	.round-value {
+		font-size: 1.5rem;
+	}
+
+	.turn-indicator {
+		font-size: 0.85rem;
+		padding: 6px 16px;
+		margin: 0;
+	}
+
+	.action-log {
+		padding: 10px 12px;
+		max-width: 100%;
+		min-width: auto;
+		margin-top: 10px;
+		margin-left: 0;
+		margin-right: 0;
+		font-size: 0.8rem;
+		min-height: 20px;
+	}
+
+	.action-log-entry {
+		margin-bottom: 4px;
+		padding: 3px 0;
+	}
+
+	.action-buttons {
+		width: 100%;
+		margin-top: 16px;
+		padding-top: 16px;
+		gap: 10px;
+		flex-direction: column;
+	}
+
+	.btn-action {
+		padding: 10px 16px;
+		font-size: 0.9rem;
+		width: 100%;
+		min-width: auto;
+	}
+
+	.btn-icon {
+		font-size: 1.1rem;
+	}
+
+	.btn-end-turn {
+		min-width: auto;
 	}
 }
 
