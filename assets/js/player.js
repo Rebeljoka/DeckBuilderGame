@@ -1,5 +1,7 @@
 // Player Logic and Functions
 
+let skipPlayerTurn = false;
+
 function drawCard() {
 	if (deck.length === 0) return;
 	let card = deck[Math.floor(Math.random() * deck.length)];
@@ -21,7 +23,14 @@ function renderHand() {
 		if (card.block) cardType = "block";
 		
 		cardDiv.className = `card-item ${cardType}`;
-		cardDiv.onclick = () => playCard(index);
+		cardDiv.style.pointerEvents = "auto";
+		cardDiv.style.cursor = "pointer";
+		
+		// Use addEventListener instead of onclick for better reliability
+		cardDiv.addEventListener("click", function(e) {
+			e.stopPropagation();
+			playCard(index);
+		});
 
 		let cardName = document.createElement("div");
 		cardName.className = "card-name";
