@@ -1,7 +1,5 @@
 // Player Logic and Functions
 
-let skipPlayerTurn = false;
-
 function drawCard() {
 	if (deck.length === 0) return;
 	let card = deck[Math.floor(Math.random() * deck.length)];
@@ -87,13 +85,10 @@ function renderHand() {
 }
 
 function playCard(index) {
-	if (skipPlayerTurn) {
-		skipPlayerTurn = false;
-		alert("Your turn is skipped! The enemy's heavy attack left you stunned.");
-		endTurn();
+	if (playerExhaustedUntil > currentRound) {
+		alert("You are too exhausted to play a card this turn!");
 		return;
 	}
-
 	let card = hand[index];
 
 	if (card.damage) {
@@ -135,8 +130,8 @@ function playCard(index) {
   }
 
 	if (card.name === "Heavy Attack") {
-		skipEnemyTurn = true;
-		console.log("You deal 30 damage and skip the enemy's next turn!");
+		playerExhaustedUntil = currentRound + 2;
+		console.log("You deal 30 damage and the enemy will be exhausted for the rest of this round and all of next round!");
 	}
 
 	hand.splice(index, 1);

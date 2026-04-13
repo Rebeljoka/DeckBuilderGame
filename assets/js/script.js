@@ -3,16 +3,17 @@ let enemyHealth = 100;
 let currentRound = 1;
 
 let deck = [
-	{ name: "Attack", damage: 15 },
-	{ name: "Attack", damage: 15 },
-	{ name: "Block", block: 8 },
-	{ name: "Heal", heal: 8 },
-	{ name: "Double Attack", damage: 22 },
-	{ name: "Draw", draw: 2},	
-	{ name: "Draw", draw: 2},
-	{ name: "Weaken", weaken: 10 },
-	{ name: "Heavy Attack", damage: 30 },
+    { name: "Attack", damage: 15 },
+    { name: "Attack", damage: 15 },
+    { name: "Block", block: 8 },
+    { name: "Heal", heal: 8 },
+    { name: "Double Attack", damage: 22 },
+    { name: "Draw", draw: 2},    
+    { name: "Draw", draw: 2},
+    { name: "Weaken", weaken: 10 },
+    { name: "Heavy Attack", damage: 30 },
 ];
+
 
 let hand = [];
 let enemyHand = [];
@@ -21,59 +22,59 @@ let playerWeaken = 0;
 let enemyWeaken = 0;
 let playerBlock = 0;
 let enemyBlock = 0;
-
-function drawCard() {
-	if (deck.length === 0) return;
-	let card = deck[Math.floor(Math.random() * deck.length)];
-	hand.push(card);
-	renderHand();
-}
-
-function playCard(index) {
-	let card = hand[index];
-
-	if (card.damage) {
-		let damage = card.damage;
-		if (enemyWeaken > 0) {
-			let reduced = Math.min(enemyWeaken, damage);
-			damage -= reduced;
-			enemyWeaken = 0;
-			console.log(`Enemy attack weakened by ${reduced}`);
-		}
-		enemyHealth -= damage;
-	}
-
-	if (card.heal) {
-		playerHealth += card.heal;
-	}
-
-	if (card.draw) {
-		for (let i = 0; i < card.draw; i++) {
-			drawCard();
-		}
-	}
-
-	if (card.name === "Heavy Attack") {
-		skipEnemyTurn = true;
-		console.log("You deal 30 damage and become exhausted!");
-	}
-
-
-
-	hand.splice(index, 1);
-	updateUI();
-	renderHand();
-	checkGameEnd();
-}
+let playerExhaustedUntil = 0;
+let enemyExhaustedUntil = 0;
+let skipEnemyTurn = false;
+let skipPlayerTurn = false;
+let waitingForNextRound = false;
 
 function endTurn() {
+	// If waiting for next round button press, increment round and proceed
+	if (waitingForNextRound) {
+		waitingForNextRound = false;
+		currentRound++;
+		drawCard();
+		document.querySelector("#end-turn-btn span:first-child").innerText = "End Turn";
+		updateUI();
+		checkGameEnd();
+		return;
+	}
+
 	// Enemy's turn
 	enemyActions = [];
-	enemyTurn();
-	displayEnemyActions();
 
-  currentRound++;
-	drawCard();
+	if (skipEnemyTurn) {
+		skipEnemyTurn = false;
+		enemyActions.push("⏭️ Enemy's turn was skipped!");
+		displayEnemyActions();
+	} else if (currentRound < enemyExhaustedUntil) {
+		enemyDrawCard();
+		enemyActions.push("😵 Enemy is too exhausted to play a card!");
+		displayEnemyActions();
+	} else {
+		// Show thinking message
+		let actionLog = document.getElementById("action-log");
+		actionLog.innerHTML = "🤔 Enemy is thinking...";
+		actionLog.classList.add("show");
+		
+		// Delay enemy action by 1.5 seconds
+		setTimeout(() => {
+			enemyActions = [];
+			enemyTurn();
+			displayEnemyActions();
+			
+			// Set flag to wait for next round button press
+			waitingForNextRound = true;
+			document.querySelector("#end-turn-btn span:first-child").innerText = "End Round";
+			updateUI();
+			checkGameEnd();
+		}, 1500);
+		return;
+	}
+
+	// Set flag to wait for next round button press (for skipped/exhausted turns)
+	waitingForNextRound = true;
+	document.querySelector("#end-turn-btn span:first-child").innerText = "End Round";
 	updateUI();
 	checkGameEnd();
 }
@@ -142,6 +143,11 @@ function restartGame() {
 	enemyWeaken = 0;
 	playerBlock = 0;
 	enemyBlock = 0;
+	playerExhaustedUntil = 0;
+	enemyExhaustedUntil = 0;
+	skipEnemyTurn = false;
+	skipPlayerTurn = false;
+	waitingForNextRound = false;
 	updateUI();
 	drawCard();
 	drawCard();
@@ -159,12 +165,18 @@ function updateStatusEffectsDisplay() {
 	
 	// Build player status effects
 	let playerEffects = [];
+	
 	if (playerWeaken > 0) {
 		playerEffects.push({ icon: "⚡", text: `Weakened - ${playerWeaken}`, type: "weaken" });
 	}
 
 	if (playerBlock > 0) {
 		playerEffects.push({ icon: "🛡️", text: `Block - ${playerBlock}`, type: "block" });
+	}
+
+	if (playerExhaustedUntil > currentRound) {
+		const turnsLeft = playerExhaustedUntil - currentRound;
+		playerEffects.push({ icon: "😵", text: `Exhausted (${turnsLeft} round${turnsLeft > 1 ? 's' : ''})`, type: "exhaust" });
 	}
 	
 	// Display player effects
@@ -179,12 +191,18 @@ function updateStatusEffectsDisplay() {
 	
 	// Build enemy status effects
 	let enemyEffects = [];
+	
 	if (enemyWeaken > 0) {
 		enemyEffects.push({ icon: "⚡", text: `Weakened -${enemyWeaken}`, type: "weaken" });
 	}
 
 	if (enemyBlock > 0) {
 		enemyEffects.push({ icon: "🛡️", text: `Block -${enemyBlock}`, type: "block" });
+	}
+
+	if (enemyExhaustedUntil > currentRound) {
+		const turnsLeft = enemyExhaustedUntil - currentRound;
+		enemyEffects.push({ icon: "😵", text: `Exhausted (${turnsLeft} round${turnsLeft > 1 ? 's' : ''})`, type: "exhaust" });
 	}
 	
 	// Display enemy effects
