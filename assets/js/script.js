@@ -86,24 +86,6 @@ function updateUI() {
 	document.getElementById("player-health-bar").style.width = playerHealthPercent + "%";
 	document.getElementById("enemy-health-bar").style.width = enemyHealthPercent + "%";
 	
-	// Update weaken status displays
-	const enemyWeakenStatus = document.getElementById("enemy-weaken-status");
-	const playerWeakenStatus = document.getElementById("player-weaken-status");
-	
-	if (enemyWeaken > 0) {
-		document.getElementById("enemy-weaken-amount").innerText = enemyWeaken;
-		enemyWeakenStatus.classList.remove("hidden");
-	} else {
-		enemyWeakenStatus.classList.add("hidden");
-	}
-	
-	if (playerWeaken > 0) {
-		document.getElementById("player-weaken-amount").innerText = playerWeaken;
-		playerWeakenStatus.classList.remove("hidden");
-	} else {
-		playerWeakenStatus.classList.add("hidden");
-	}
-	
 	// Update card count
 	document.getElementById("card-count").innerText = hand.length;
 	document.getElementById("enemy-card-count").innerText = enemyHand.length;
@@ -113,6 +95,9 @@ function updateUI() {
     
     // Render enemy hand
     renderEnemyHand();
+    
+    // Update status effects displays
+    updateStatusEffectsDisplay();
 }
 
 function checkGameEnd() {
@@ -155,4 +140,52 @@ function restartGame() {
 	drawCard();
 	enemyDrawCard();
 	enemyDrawCard();
+}
+
+function updateStatusEffectsDisplay() {
+	const playerEffectsContainer = document.getElementById("player-status-effects");
+	const enemyEffectsContainer = document.getElementById("enemy-status-effects");
+	
+	// Clear containers
+	playerEffectsContainer.innerHTML = "";
+	enemyEffectsContainer.innerHTML = "";
+	
+	// Build player status effects
+	let playerEffects = [];
+	if (playerWeaken > 0) {
+		playerEffects.push({ icon: "⚡", text: `Weakened -${playerWeaken}`, type: "weaken" });
+	}
+	
+	// Display player effects
+	if (playerEffects.length === 0) {
+		playerEffectsContainer.innerHTML = '<span class="status-effect-empty">No effects</span>';
+	} else {
+		playerEffects.forEach(effect => {
+			const badge = createStatusBadge(effect.icon, effect.text, effect.type);
+			playerEffectsContainer.appendChild(badge);
+		});
+	}
+	
+	// Build enemy status effects
+	let enemyEffects = [];
+	if (enemyWeaken > 0) {
+		enemyEffects.push({ icon: "⚡", text: `Weakened -${enemyWeaken}`, type: "weaken" });
+	}
+	
+	// Display enemy effects
+	if (enemyEffects.length === 0) {
+		enemyEffectsContainer.innerHTML = '<span class="status-effect-empty">No effects</span>';
+	} else {
+		enemyEffects.forEach(effect => {
+			const badge = createStatusBadge(effect.icon, effect.text, effect.type);
+			enemyEffectsContainer.appendChild(badge);
+		});
+	}
+}
+
+function createStatusBadge(icon, text, type) {
+	const badge = document.createElement("div");
+	badge.className = `status-effect-badge status-effect-${type}`;
+	badge.innerHTML = `<span>${icon}</span><span>${text}</span>`;
+	return badge;
 }
