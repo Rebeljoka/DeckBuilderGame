@@ -18,10 +18,10 @@ function enemyTurn() {
 		// Apply card effects
 		if (card.damage) {
 			let damage = card.damage;
-			if (playerWeaken > 0) {
-				let reduced = Math.min(playerWeaken, damage);
+			if (enemyWeaken > 0) {
+				let reduced = Math.min(enemyWeaken, damage);
 				damage -= reduced;
-				playerWeaken = 0;
+				enemyWeaken = 0;
 				enemyActions.push(`🧪 Enemy attack weakened by ${reduced}!`);
 			}
 			playerHealth -= damage;
@@ -45,9 +45,9 @@ function enemyTurn() {
 			enemyActions.push(`🎴 Enemy drew ${card.draw} cards!`);
 		}
 		
-		if (card.enemyWeaken) {
-			playerWeaken += Math.abs(card.enemyWeaken);
-			enemyActions.push(`🧪 Enemy weakened your next attack by ${Math.abs(card.enemyWeaken)}.`);
+		if (card.weaken) {
+			playerWeaken += Math.abs(card.weaken);
+			enemyActions.push(`🧪 Enemy weakened your next attack by ${Math.abs(playerWeaken)}.`);
 		}
 		
 		// Remove played card from enemy hand

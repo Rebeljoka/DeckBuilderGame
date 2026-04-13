@@ -11,7 +11,7 @@ let deck = [
 	{ name: "heavyAttack", damage: 30 },	// skip turn..?
 	{ name: "Draw", draw: 2},	
 	{ name: "Draw", draw: 2},
-	{ name: "Weaken", enemyWeaken: -10 },
+	{ name: "Weaken", weaken: 10 },
 ];
 
 let hand = [];
@@ -27,79 +27,7 @@ function drawCard() {
 	renderHand();
 }
 
-function renderHand() {
-	let cardsDiv = document.getElementById("cards");
-	cardsDiv.innerHTML = "";
 
-	hand.forEach((card, index) => {
-		let cardDiv = document.createElement("div");
-		
-		// Determine card type for styling
-		let cardType = "default";
-		if (card.damage) cardType = "attack";
-		if (card.heal) cardType = "heal";
-		if (card.block) cardType = "block";
-		
-		cardDiv.className = `card-item ${cardType}`;
-		cardDiv.onclick = () => playCard(index);
-
-		let cardName = document.createElement("div");
-		cardName.className = "card-name";
-		cardName.innerText = card.name;
-		cardDiv.appendChild(cardName);
-
-		if (card.damage) {
-			let damageStat = document.createElement("div");
-			damageStat.className = "card-stat";
-			damageStat.innerText = `⚔️ ${card.damage} Damage`;
-			cardDiv.appendChild(damageStat);
-		}
-
-		if (card.block) {
-			let blockStat = document.createElement("div");
-			blockStat.className = "card-stat";
-			blockStat.innerText = `🛡️ ${card.block} Block`;
-			cardDiv.appendChild(blockStat);
-		}
-
-		if (card.heal) {
-			let healStat = document.createElement("div");
-			healStat.className = "card-stat";
-			healStat.innerText = `💚 ${card.heal} Heal`;
-			cardDiv.appendChild(healStat);
-		}
-
-		if (card.draw) {
-			let drawText = document.createElement("div");
-			drawText.className = "card-stat";
-			drawText.innerText = `Draw: ${card.draw}`;
-			cardDiv.appendChild(drawText);
-		}
-
-		if (card.enemyWeaken) {
-			let weakenText = document.createElement("div");
-			weakenText.className = "card-stat";
-			weakenText.innerText = `Weaken Enemy: ${-card.enemyWeaken}`;
-			cardDiv.appendChild(weakenText);
-		}
-
-		if (card.heavyAttack) {
-			let heavyText = document.createElement("div");
-			heavyText.className = "card-stat";
-			heavyText.innerText = `Skip Enemy Turn`;
-			cardDiv.appendChild(heavyText);
-		}
-
-		if (card.doubleAttack) {
-			let doubleText = document.createElement("div");
-			doubleText.className = "card-stat";
-			doubleText.innerText = `Damage: ${card.damage} (Double Next Attack)`;
-			cardDiv.appendChild(doubleText);
-		}
-
-		cardsDiv.appendChild(cardDiv);
-	});
-}
 
 function playCard(index) {
 	let card = hand[index];
@@ -125,10 +53,7 @@ function playCard(index) {
 		}
 	}
 
-	if (card.enemyWeaken) {
-		enemyWeaken += Math.abs(card.enemyWeaken);
-		console.log(`Enemy next attack reduced by ${Math.abs(card.enemyWeaken)}`);
-	}
+
 
 	hand.splice(index, 1);
 	updateUI();

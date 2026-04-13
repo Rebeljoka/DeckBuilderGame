@@ -65,10 +65,10 @@ function renderHand() {
 			cardDiv.appendChild(drawText);
 		}
 
-		if (card.enemyWeaken) {
+		if (card.weaken) {
 			let weakenText = document.createElement("div");
 			weakenText.className = "card-stat";
-			weakenText.innerText = `Weaken Enemy: ${-card.enemyWeaken}`;
+			weakenText.innerText = `Weaken Enemy: ${-card.weaken}`;
 			cardDiv.appendChild(weakenText);
 		}
 
@@ -121,8 +121,8 @@ function playCard(index) {
 		}
 	}
 
-	if (card.enemyWeaken) {
-		enemyWeaken += Math.abs(card.enemyWeaken);
+	if (card.weaken) {
+		enemyWeaken += Math.abs(card.weaken);
 		console.log(`Enemy next attack reduced by ${Math.abs(card.enemyWeaken)}`);
 	}
 
