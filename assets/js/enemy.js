@@ -24,6 +24,12 @@ function enemyTurn() {
 				enemyWeaken = 0;
 				enemyActions.push(`🧪 Enemy attack weakened by ${reduced}!`);
 			}
+			if (playerBlock > 0) {
+				let blocked = Math.min(playerBlock, damage);
+				damage -= blocked;
+				playerBlock -= blocked;
+				enemyActions.push(`🛡️ Player's attack blocked for ${blocked} damage!`);
+			}
 			playerHealth -= damage;
 			enemyActions.push(`⚔️ Enemy dealt ${damage} damage!`);
 		}
@@ -32,10 +38,6 @@ function enemyTurn() {
 			enemyHealth += card.heal;
 			if (enemyHealth > 100) enemyHealth = 100;
 			enemyActions.push(`💚 Enemy healed ${card.heal} health!`);
-		}
-		
-		if (card.block) {
-			enemyActions.push(`🛡️ Enemy blocked ${card.block} damage!`);
 		}
 		
 		if (card.draw) {
@@ -48,6 +50,11 @@ function enemyTurn() {
 		if (card.weaken) {
 			playerWeaken += Math.abs(card.weaken);
 			enemyActions.push(`🧪 Enemy weakened your next attack by ${Math.abs(playerWeaken)}.`);
+		}
+
+		if (card.block) {
+			enemyBlock += card.block;
+			enemyActions.push(`🛡️ Enemy gains ${card.block} block for its next defense!`);
 		}
 		
 		// Remove played card from enemy hand
