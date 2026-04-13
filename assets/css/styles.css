@@ -83,8 +83,10 @@ body {
 .game-board {
 	flex: 1;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row-reverse;
 	gap: 30px;
+	justify-content: center;
+	align-items: center;
 }
 
 /* ============================================
@@ -119,6 +121,22 @@ body {
 	font-weight: 700;
 	margin-bottom: 15px;
 	color: var(--text-primary);
+}
+
+.weaken-status {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #fbbf24;
+	margin-bottom: 12px;
+	padding: 8px 12px;
+	background: rgba(251, 191, 36, 0.1);
+	border: 1px solid rgba(251, 191, 36, 0.3);
+	border-radius: 8px;
+	transition: var(--transition);
+}
+
+.weaken-status.hidden {
+	display: none;
 }
 
 .health-container {
@@ -320,6 +338,16 @@ body {
 	align-content: flex-start;
 }
 
+.enemy-cards {
+	min-height: 100px;
+}
+
+.enemy-hand-section {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border-color);
+}
+
 /* ============================================
    CARD STYLES
    ============================================ */
@@ -388,6 +416,102 @@ body {
 .card-item.block {
 	background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.card-item.block:hover {
+	box-shadow: 0 16px 48px rgba(245, 158, 11, 0.5);
+}
+
+.enemy-cards .card-item {
+	background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+	cursor: default;
+	opacity: 0.7;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.enemy-cards .card-item.attack {
+	background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+	opacity: 0.8;
+	box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+}
+
+.enemy-cards .card-item.heal {
+	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+	opacity: 0.8;
+	box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.enemy-cards .card-item.block {
+	background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+	opacity: 0.8;
+	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.enemy-cards .card-item:hover {
+	transform: none;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.enemy-cards .card-item.attack:hover {
+	box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+}
+
+.enemy-cards .card-item.heal:hover {
+	box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.enemy-cards .card-item.block:hover {
+	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+}
+
+.enemy-cards .card-name {
+	color: var(--text-secondary);
+	font-size: 0.9rem;
+}
+
+.enemy-cards .card-stat {
+	display: none;
+}
+
+.enemy-cards .card-item::before {
+	background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+}
+
+/* ============================================
+   ACTION LOG
+   ============================================ */
+
+.action-log {
+	background: rgba(15, 23, 42, 0.5);
+	border: 1px solid var(--border-color);
+	border-radius: 12px;
+	padding: 12px 16px;
+	margin-top: 12px;
+	min-height: 24px;
+	font-size: 0.95rem;
+	color: var(--text-secondary);
+	text-align: center;
+	max-width: 400px;
+	margin-left: auto;
+	margin-right: auto;
+	animation: fadeIn 0.3s ease-in;
+}
+
+.action-log.show {
+	color: var(--text-primary);
+	border-color: var(--secondary-color);
+	background: rgba(236, 72, 153, 0.1);
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-5px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 .card-item.block:hover {
@@ -506,8 +630,8 @@ body {
 	}
 
 	.card-item {
-		width: 120px;
-		padding: 12px;
+		width: 140px;
+		padding: 16px;
 	}
 
 	.hand-header {
