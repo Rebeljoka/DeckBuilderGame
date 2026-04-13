@@ -56,6 +56,11 @@ function enemyTurn() {
 			enemyBlock += card.block;
 			enemyActions.push(`🛡️ Enemy gains ${card.block} block for its next defense!`);
 		}
+
+		if (card.name === "Heavy Attack") {
+			enemyExhaustedUntil = currentRound + 2;
+			enemyActions.push(`⏭️ Enemy used Heavy Attack and will be exhausted for the next round!`);
+		}
 		
 		// Remove played card from enemy hand
 		enemyHand.splice(cardIndex, 1);
