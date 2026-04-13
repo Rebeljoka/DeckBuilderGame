@@ -15,6 +15,10 @@ let deck = [
 ];
 
 let hand = [];
+let enemyHand = [];
+let enemyActions = []; // To display what enemy did
+let playerWeaken = 0;
+let enemyWeaken = 0;
 
 function drawCard() {
 	if (deck.length === 0) return;
@@ -66,29 +70,29 @@ function renderHand() {
 		}
 
 		if (card.draw) {
-			let drawText = document.createElement("p");
-			drawText.className = "card-text mb-0 small";
+			let drawText = document.createElement("div");
+			drawText.className = "card-stat";
 			drawText.innerText = `Draw: ${card.draw}`;
 			cardDiv.appendChild(drawText);
 		}
 
 		if (card.enemyWeaken) {
-			let weakenText = document.createElement("p");
-			weakenText.className = "card-text mb-0 small";
+			let weakenText = document.createElement("div");
+			weakenText.className = "card-stat";
 			weakenText.innerText = `Weaken Enemy: ${-card.enemyWeaken}`;
 			cardDiv.appendChild(weakenText);
 		}
 
 		if (card.heavyAttack) {
-			let heavyText = document.createElement("p");
-			heavyText.className = "card-text mb-0 small";
+			let heavyText = document.createElement("div");
+			heavyText.className = "card-stat";
 			heavyText.innerText = `Skip Enemy Turn`;
 			cardDiv.appendChild(heavyText);
 		}
 
 		if (card.doubleAttack) {
-			let doubleText = document.createElement("p");
-			doubleText.className = "card-text mb-0 small";
+			let doubleText = document.createElement("div");
+			doubleText.className = "card-stat";
 			doubleText.innerText = `Damage: ${card.damage} (Double Next Attack)`;
 			cardDiv.appendChild(doubleText);
 		}
@@ -101,21 +105,29 @@ function playCard(index) {
 	let card = hand[index];
 
 	if (card.damage) {
-		enemyHealth -= card.damage;
+		let damage = card.damage;
+		if (enemyWeaken > 0) {
+			let reduced = Math.min(enemyWeaken, damage);
+			damage -= reduced;
+			enemyWeaken = 0;
+			console.log(`Enemy attack weakened by ${reduced}`);
+		}
+		enemyHealth -= damage;
 	}
 
 	if (card.heal) {
 		playerHealth += card.heal;
 	}
 
-		if (card.draw) {
+	if (card.draw) {
 		for (let i = 0; i < card.draw; i++) {
 			drawCard();
 		}
 	}
 
 	if (card.enemyWeaken) {
-		// % decrease enemy damage next turn
+		enemyWeaken += Math.abs(card.enemyWeaken);
+		console.log(`Enemy next attack reduced by ${Math.abs(card.enemyWeaken)}`);
 	}
 
 	hand.splice(index, 1);
@@ -125,8 +137,10 @@ function playCard(index) {
 }
 
 function endTurn() {
-	// enemy attacks
-	playerHealth -= 15; // fixed damage for now, can be randomized or based on enemy cards later
+	// Enemy's turn
+	enemyActions = [];
+	enemyTurn();
+	displayEnemyActions();
 
   currentRound++;
 	drawCard();
@@ -147,13 +161,33 @@ function updateUI() {
 	document.getElementById("player-health-bar").style.width = playerHealthPercent + "%";
 	document.getElementById("enemy-health-bar").style.width = enemyHealthPercent + "%";
 	
-
+	// Update weaken status displays
+	const enemyWeakenStatus = document.getElementById("enemy-weaken-status");
+	const playerWeakenStatus = document.getElementById("player-weaken-status");
+	
+	if (enemyWeaken > 0) {
+		document.getElementById("enemy-weaken-amount").innerText = enemyWeaken;
+		enemyWeakenStatus.classList.remove("hidden");
+	} else {
+		enemyWeakenStatus.classList.add("hidden");
+	}
+	
+	if (playerWeaken > 0) {
+		document.getElementById("player-weaken-amount").innerText = playerWeaken;
+		playerWeakenStatus.classList.remove("hidden");
+	} else {
+		playerWeakenStatus.classList.add("hidden");
+	}
 	
 	// Update card count
 	document.getElementById("card-count").innerText = hand.length;
+	document.getElementById("enemy-card-count").innerText = enemyHand.length;
 
     // Update round counter
     document.getElementById("round-number").innerText = currentRound;
+    
+    // Render enemy hand
+    renderEnemyHand();
 }
 
 function checkGameEnd() {
@@ -167,9 +201,14 @@ function checkGameEnd() {
 }
 
 function startGame() {
-	// Draw 2 cards to start
+	// Draw 2 cards for the player to start
 	drawCard();
 	drawCard();
+	
+	// Draw 2 cards for the enemy to start
+	enemyDrawCard();
+	enemyDrawCard();
+	
 	updateUI();
 	
 	// Hide start button and show end turn button
@@ -182,7 +221,13 @@ function restartGame() {
 	enemyHealth = 100;
 	currentRound = 1;
 	hand = [];
+	enemyHand = [];
+	enemyActions = [];
+	playerWeaken = 0;
+	enemyWeaken = 0;
 	updateUI();
 	drawCard();
 	drawCard();
+	enemyDrawCard();
+	enemyDrawCard();
 }

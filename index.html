@@ -15,6 +15,12 @@
 					<h1 class="game-title">⚔️ Card Showdown</h1>
 					<p class="game-subtitle">Test your strategy and defeat your opponent</p>
 				</div>
+                <div class="d-flex justify-content-center">
+                    <button id="start-btn" class="btn btn-success btn-action btn-start-game" onclick="startGame()">
+						<span>Start Game</span>
+						<span class="btn-icon">⚔️</span>
+					</button>
+                </div>
 			</header>
 
 			<!-- Main Game Area -->
@@ -23,6 +29,7 @@
 				<section class="player-section enemy-section">
 					<div class="player-info">
 						<h2 class="player-label">Enemy</h2>
+						<div id="enemy-weaken-status" class="weaken-status hidden">⚡ Weakened: -<span id="enemy-weaken-amount">0</span></div>
 						<div class="health-container">
 							<div class="health-bar-bg">
 								<div id="enemy-health-bar" class="health-bar"></div>
@@ -33,6 +40,15 @@
 							</div>
 						</div>
 						<div class="player-avatar enemy-avatar">🤖</div>
+					</div>
+
+					<!-- Enemy Hand Section -->
+					<div class="hand-section enemy-hand-section">
+						<div class="hand-header">
+							<h3 class="hand-title">Enemy Hand</h3>
+							<span class="card-count"><span id="enemy-card-count">0</span> Cards</span>
+						</div>
+						<div id="enemy-cards" class="cards-container enemy-cards"></div>
 					</div>
 				</section>
 
@@ -45,6 +61,7 @@
 							<span id="round-number" class="round-value">1</span>
 						</div>
 						<p class="turn-indicator">Your Turn</p>
+						<div id="action-log" class="action-log"></div>
 					</div>
 					<div class="arena-divider"></div>
 				</section>
@@ -53,6 +70,7 @@
 				<section class="player-section player-section-main">
 					<div class="player-info">
 						<h2 class="player-label">You</h2>
+						<div id="player-weaken-status" class="weaken-status hidden">⚡ Weakened: -<span id="player-weaken-amount">0</span></div>
 						<div class="health-container">
 							<div class="health-bar-bg">
 								<div id="player-health-bar" class="health-bar player-health"></div>
@@ -76,10 +94,6 @@
 
 					<!-- Action Buttons -->
 					<div class="action-buttons">
-						<button id="start-btn" class="btn btn-success btn-action btn-start-game" onclick="startGame()">
-							<span>Start Game</span>
-							<span class="btn-icon">⚔️</span>
-						</button>
 						<button id="end-turn-btn" class="btn btn-primary btn-action btn-end-turn" onclick="endTurn()" style="display: none;">
 							<span>End Turn</span>
 							<span class="btn-icon">→</span>
@@ -90,6 +104,7 @@
 		</div>
 
 		<script src="/assets/js/script.js"></script>
+		<script src="/assets/js/enemy.js"></script>
 	</body>
 </html>
 
