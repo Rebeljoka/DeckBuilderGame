@@ -125,20 +125,109 @@ body {
 	color: var(--text-primary);
 }
 
-.weaken-status {
+/* ============================================
+   STATUS EFFECTS SECTION
+   ============================================ */
+
+.status-effects-section {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid var(--border-color);
+}
+
+.status-effects-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+.status-label {
+	font-size: 0.95rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.status-effects-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	min-height: 32px;
+}
+
+.status-effect-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 14px;
+	border-radius: 12px;
 	font-size: 0.9rem;
 	font-weight: 600;
-	color: #fbbf24;
-	margin-bottom: 12px;
-	padding: 8px 12px;
-	background: rgba(251, 191, 36, 0.1);
-	border: 1px solid rgba(251, 191, 36, 0.3);
-	border-radius: 8px;
+	backdrop-filter: blur(10px);
+	border: 1px solid;
+	animation: slideIn 0.3s ease-out;
 	transition: var(--transition);
 }
 
-.weaken-status.hidden {
-	display: none;
+.status-effect-badge:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* Status Effect Types */
+.status-effect-weaken {
+	background: rgba(251, 191, 36, 0.15);
+	border-color: rgba(251, 191, 36, 0.5);
+	color: #fbbf24;
+}
+
+.status-effect-stun {
+	background: rgba(168, 85, 247, 0.15);
+	border-color: rgba(168, 85, 247, 0.5);
+	color: #c084fc;
+}
+
+.status-effect-poison {
+	background: rgba(34, 197, 94, 0.15);
+	border-color: rgba(34, 197, 94, 0.5);
+	color: #86efac;
+}
+
+.status-effect-shield {
+	background: rgba(59, 130, 246, 0.15);
+	border-color: rgba(59, 130, 246, 0.5);
+	color: #93c5fd;
+}
+
+.status-effect-burn {
+	background: rgba(239, 68, 68, 0.15);
+	border-color: rgba(239, 68, 68, 0.5);
+	color: #fca5a5;
+}
+
+.status-effect-regenerate {
+	background: rgba(16, 185, 129, 0.15);
+	border-color: rgba(16, 185, 129, 0.5);
+	color: #6ee7b7;
+}
+
+.status-effect-empty {
+	color: var(--text-secondary);
+	font-size: 0.85rem;
+	padding: 0;
 }
 
 .health-container {
@@ -357,11 +446,10 @@ body {
 }
 
 .cards-container {
-	display: flex;
-	justify-content: center;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
 	gap: 16px;
-	flex-wrap: wrap;
-	min-height: 180px;
+	min-height: 100px;
 	align-content: flex-start;
 }
 
@@ -761,6 +849,10 @@ body {
 		min-width: 90px;
 	}
 
+	.cards-container {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
 	.card-item {
 		width: 120px;
 		padding: 12px;
@@ -851,12 +943,6 @@ body {
 
 	.health-text {
 		font-size: 1rem;
-	}
-
-	.weaken-status {
-		font-size: 0.8rem;
-		padding: 6px 10px;
-		margin-bottom: 10px;
 	}
 
 	.hand-section {
