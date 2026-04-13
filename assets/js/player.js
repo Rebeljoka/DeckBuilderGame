@@ -72,18 +72,14 @@ function renderHand() {
 			cardDiv.appendChild(weakenText);
 		}
 
-		if (card.heavyAttack) {
+		if (card.name === "Heavy Attack") {
 			let heavyText = document.createElement("div");
 			heavyText.className = "card-stat";
-			heavyText.innerText = `Skip Enemy Turn`;
-			cardDiv.appendChild(heavyText);
 		}
 
-		if (card.doubleAttack) {
+		if (card.name === "Double Attack") {
 			let doubleText = document.createElement("div");
 			doubleText.className = "card-stat";
-			doubleText.innerText = `Damage: ${card.damage} (Double Next Attack)`;
-			cardDiv.appendChild(doubleText);
 		}
 
 		cardsDiv.appendChild(cardDiv);
@@ -108,6 +104,13 @@ function playCard(index) {
 			playerWeaken = 0;
 			console.log(`Your attack weakened by ${reduced}`);
 		}
+
+    if (enemyBlock > 0) {
+      let blocked = Math.min(enemyBlock, damage);
+      damage -= blocked;
+      enemyBlock -= blocked;
+      console.log(`Enemy blocked ${blocked} damage!`);
+    }
 		enemyHealth -= damage;
 	}
 
@@ -123,12 +126,17 @@ function playCard(index) {
 
 	if (card.weaken) {
 		enemyWeaken += Math.abs(card.weaken);
-		console.log(`Enemy next attack reduced by ${Math.abs(card.enemyWeaken)}`);
+		console.log(`Enemy next attack reduced by ${Math.abs(card.weaken)}`);
 	}
 
-	if (card.name === "heavyAttack") {
-		skipPlayerTurn = true;
-		console.log("You deal 30 damage and skip the your next turn!");
+  if (card.block) {
+    playerBlock += card.block;
+    console.log(`You gain ${card.block} block for your next defense!`);
+  }
+
+	if (card.name === "Heavy Attack") {
+		skipEnemyTurn = true;
+		console.log("You deal 30 damage and skip the enemy's next turn!");
 	}
 
 	hand.splice(index, 1);
