@@ -393,6 +393,8 @@ body {
 	gap: 12px;
 	position: relative;
 	overflow: hidden;
+	pointer-events: auto;
+	user-select: none;
 }
 
 .card-item::before {
@@ -556,6 +558,7 @@ body {
 	text-align: center;
 	position: relative;
 	z-index: 1;
+	pointer-events: none;
 }
 
 .card-stat {
@@ -568,6 +571,7 @@ body {
 	color: white;
 	position: relative;
 	z-index: 1;
+	pointer-events: none;
 }
 
 /* ============================================
