@@ -9,22 +9,22 @@
 }
 
 :root {
-	--primary-color: #6366f1;
-	--primary-dark: #4f46e5;
-	--secondary-color: #ec4899;
-	--success-color: #10b981;
-	--danger-color: #ef4444;
-	--warning-color: #f59e0b;
-	--dark-bg: #0f172a;
-	--card-bg: #1e293b;
-	--border-color: #334155;
-	--text-primary: #f1f5f9;
-	--text-secondary: #cbd5e1;
+	--primary-color: #D6CCFF;
+	--primary-dark: #C9B8F5;
+	--secondary-color: #FFB3D9;
+	--success-color: #B8F3D6;
+	--danger-color: #FFB3B3;
+	--warning-color: #FFD9A3;
+	--dark-bg: #FAF8F5;
+	--card-bg: #F5F0E8;
+	--border-color: #E8DFD3;
+	--text-primary: #5A4A42;
+	--text-secondary: #8B7B73;
 	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-	background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+	background: linear-gradient(135deg, #FAF8F5 0%, #F3EEE7 50%, #FAF8F5 100%);
 	color: var(--text-primary);
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	min-height: 100vh;
@@ -53,7 +53,7 @@ body {
 .game-header {
 	text-align: center;
 	padding: 40px 20px 30px;
-	background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+	background: linear-gradient(180deg, rgba(214, 204, 255, 0.15) 0%, transparent 100%);
 	border-bottom: 2px solid var(--border-color);
 	margin-bottom: 40px;
 	border-radius: 20px;
@@ -63,7 +63,7 @@ body {
 .game-title {
 	font-size: 3.5rem;
 	font-weight: 800;
-	background: linear-gradient(135deg, #6366f1, #ec4899);
+	background: linear-gradient(135deg, #C9B8F5, #FFB3D9);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
@@ -96,12 +96,12 @@ body {
    ============================================ */
 
 .player-section {
-	background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.8));
+	background: linear-gradient(135deg, rgba(245, 240, 232, 0.95), rgba(250, 248, 245, 0.95));
 	border: 1px solid var(--border-color);
 	border-radius: 20px;
 	padding: 30px;
 	backdrop-filter: blur(20px);
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 	transition: var(--transition);
     min-width: 670px;
     max-width: 670px;
@@ -109,7 +109,7 @@ body {
 
 .player-section:hover {
 	border-color: var(--primary-color);
-	box-shadow: 0 12px 48px rgba(99, 102, 241, 0.15);
+	box-shadow: 0 12px 48px rgba(214, 204, 255, 0.15);
 }
 
 .player-info {
@@ -191,39 +191,39 @@ body {
 
 /* Status Effect Types */
 .status-effect-weaken {
-	background: rgba(251, 191, 36, 0.15);
-	border-color: rgba(251, 191, 36, 0.5);
-	color: #fbbf24;
+	background: rgba(255, 217, 163, 0.25);
+	border-color: rgba(255, 217, 163, 0.6);
+	color: #D4941E;
 }
 
 .status-effect-stun {
-	background: rgba(168, 85, 247, 0.15);
-	border-color: rgba(168, 85, 247, 0.5);
-	color: #c084fc;
+	background: rgba(230, 204, 255, 0.25);
+	border-color: rgba(230, 204, 255, 0.6);
+	color: #9B7FC9;
 }
 
 .status-effect-poison {
-	background: rgba(34, 197, 94, 0.15);
-	border-color: rgba(34, 197, 94, 0.5);
-	color: #86efac;
+	background: rgba(184, 243, 214, 0.25);
+	border-color: rgba(184, 243, 214, 0.6);
+	color: #4A8B6B;
 }
 
 .status-effect-shield {
-	background: rgba(59, 130, 246, 0.15);
-	border-color: rgba(59, 130, 246, 0.5);
-	color: #93c5fd;
+	background: rgba(180, 215, 255, 0.25);
+	border-color: rgba(180, 215, 255, 0.6);
+	color: #4A7BA7;
 }
 
 .status-effect-burn {
-	background: rgba(239, 68, 68, 0.15);
-	border-color: rgba(239, 68, 68, 0.5);
-	color: #fca5a5;
+	background: rgba(255, 179, 179, 0.25);
+	border-color: rgba(255, 179, 179, 0.6);
+	color: #C75C5C;
 }
 
 .status-effect-regenerate {
-	background: rgba(16, 185, 129, 0.15);
-	border-color: rgba(16, 185, 129, 0.5);
-	color: #6ee7b7;
+	background: rgba(184, 243, 214, 0.25);
+	border-color: rgba(184, 243, 214, 0.6);
+	color: #4A8B6B;
 }
 
 .status-effect-empty {
@@ -243,29 +243,29 @@ body {
 .health-bar-bg {
 	width: 100%;
 	height: 48px;
-	background: rgba(50, 50, 50, 0.5);
+	background: rgba(232, 223, 211, 0.6);
 	border-radius: 16px;
 	overflow: hidden;
 	border: 2px solid var(--border-color);
-	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .health-bar {
 	height: 100%;
-	background: linear-gradient(90deg, #10b981, #34d399);
+	background: linear-gradient(90deg, #B8F3D6, #A8E6CF);
 	border-radius: 14px;
 	width: 100%;
 	transition: width 0.5s ease-out;
-	box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+	box-shadow: 0 0 20px rgba(184, 243, 214, 0.4);
 }
 
 .health-bar.player-health {
-	background: linear-gradient(90deg, #10b981, #34d399);
+	background: linear-gradient(90deg, #B8F3D6, #A8E6CF);
 }
 
 .enemy-section .health-bar {
-	background: linear-gradient(90deg, #ef4444, #f87171);
-	box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+	background: linear-gradient(90deg, #FFB3B3, #FFD0D0);
+	box-shadow: 0 0 20px rgba(255, 179, 179, 0.4);
 }
 
 .health-text {
@@ -294,15 +294,15 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+	background: linear-gradient(135deg, rgba(214, 204, 255, 0.3), rgba(255, 179, 217, 0.3));
 	border: 2px solid var(--border-color);
 	border-radius: 20px;
 	transition: var(--transition);
-	box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+	box-shadow: 0 8px 24px rgba(214, 204, 255, 0.15);
 }
 
 .enemy-avatar {
-	background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
+	background: linear-gradient(135deg, rgba(255, 179, 179, 0.3), rgba(255, 217, 163, 0.3));
 }
 
 .player-avatar:hover {
@@ -352,7 +352,7 @@ body {
 	height: 100%;
 	background: linear-gradient(180deg, transparent, var(--primary-color), transparent);
 	border-radius: 1px;
-	box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+	box-shadow: 0 0 20px rgba(214, 204, 255, 0.4);
 }
 
 .arena-info {
@@ -364,7 +364,7 @@ body {
 }
 
 .round-counter {
-	background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(99, 102, 241, 0.2));
+	background: linear-gradient(135deg, rgba(255, 179, 217, 0.2), rgba(214, 204, 255, 0.2));
 	border: 2px solid var(--secondary-color);
 	padding: 12px 24px;
 	border-radius: 20px;
@@ -373,7 +373,7 @@ body {
 	align-items: center;
 	gap: 6px;
 	min-width: 100px;
-	box-shadow: 0 8px 24px rgba(236, 72, 153, 0.2);
+	box-shadow: 0 8px 24px rgba(255, 179, 217, 0.2);
 }
 
 .round-label {
@@ -387,7 +387,7 @@ body {
 .round-value {
 	font-size: 2rem;
 	font-weight: 800;
-	background: linear-gradient(135deg, var(--secondary-color), #ec4899);
+	background: linear-gradient(135deg, var(--secondary-color), #FFB3D9);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
@@ -444,7 +444,7 @@ body {
 	border-radius: 20px;
 	font-size: 0.9rem;
 	font-weight: 600;
-	color: white;
+	color: #6B5B53;
 }
 
 .cards-container {
@@ -470,14 +470,14 @@ body {
    ============================================ */
 
 .card-item {
-	background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-	border: 2px solid rgba(255, 255, 255, 0.2);
+	background: linear-gradient(135deg, #D6CCFF 0%, #C9B8F5 100%);
+	border: 2px solid rgba(214, 204, 255, 0.4);
 	border-radius: 16px;
 	padding: 16px;
 	width: 140px;
 	cursor: pointer;
 	transition: var(--transition);
-	box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+	box-shadow: 0 8px 24px rgba(214, 204, 255, 0.25);
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
@@ -510,61 +510,61 @@ body {
 
 .card-item:hover {
 	transform: translateY(-8px) scale(1.05);
-	box-shadow: 0 16px 48px rgba(99, 102, 241, 0.5);
-	border-color: rgba(255, 255, 255, 0.4);
+	box-shadow: 0 16px 48px rgba(214, 204, 255, 0.35);
+	border-color: rgba(214, 204, 255, 0.6);
 }
 
 .card-item.attack {
-	background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-	box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+	background: linear-gradient(135deg, #FFB3B3 0%, #FFA0A0 100%);
+	box-shadow: 0 8px 24px rgba(255, 179, 179, 0.25);
 }
 
 .card-item.attack:hover {
-	box-shadow: 0 16px 48px rgba(239, 68, 68, 0.5);
+	box-shadow: 0 16px 48px rgba(255, 179, 179, 0.4);
 }
 
 .card-item.heal {
-	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-	box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+	background: linear-gradient(135deg, #B8F3D6 0%, #A8E6CF 100%);
+	box-shadow: 0 8px 24px rgba(184, 243, 214, 0.25);
 }
 
 .card-item.heal:hover {
-	box-shadow: 0 16px 48px rgba(16, 185, 129, 0.5);
+	box-shadow: 0 16px 48px rgba(184, 243, 214, 0.4);
 }
 
 .card-item.block {
-	background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+	background: linear-gradient(135deg, #FFD9A3 0%, #FFC98F 100%);
+	box-shadow: 0 8px 24px rgba(255, 217, 163, 0.25);
 }
 
 .card-item.block:hover {
-	box-shadow: 0 16px 48px rgba(245, 158, 11, 0.5);
+	box-shadow: 0 16px 48px rgba(255, 217, 163, 0.4);
 }
 
 .enemy-cards .card-item {
-	background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+	background: linear-gradient(135deg, #E8DFD3 0%, #DFD5C9 100%);
 	cursor: default;
 	opacity: 0.7;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     min-height: 105px;
 }
 
 .enemy-cards .card-item.attack {
-	background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+	background: linear-gradient(135deg, #FFB3B3 0%, #FFA0A0 100%);
 	opacity: 0.8;
-	box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
+	box-shadow: 0 8px 24px rgba(255, 179, 179, 0.25);
 }
 
 .enemy-cards .card-item.heal {
-	background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+	background: linear-gradient(135deg, #B8F3D6 0%, #A8E6CF 100%);
 	opacity: 0.8;
-	box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+	box-shadow: 0 8px 24px rgba(184, 243, 214, 0.25);
 }
 
 .enemy-cards .card-item.block {
-	background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+	background: linear-gradient(135deg, #FFD9A3 0%, #FFC98F 100%);
 	opacity: 0.8;
-	box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+	box-shadow: 0 8px 24px rgba(255, 217, 163, 0.25);
 }
 
 .enemy-cards .card-item:hover {
@@ -602,7 +602,7 @@ body {
    ============================================ */
 
 .action-log {
-	background: rgba(15, 23, 42, 0.5);
+	background: rgba(245, 240, 232, 0.6);
 	border: 1px solid var(--border-color);
 	border-radius: 12px;
 	padding: 12px 16px;
@@ -620,7 +620,7 @@ body {
 .action-log.show {
 	color: var(--text-primary);
 	border-color: var(--secondary-color);
-	background: rgba(236, 72, 153, 0.1);
+	background: rgba(255, 179, 217, 0.1);
 }
 
 @keyframes fadeIn {
@@ -645,7 +645,7 @@ body {
 .card-name {
 	font-size: 1.1rem;
 	font-weight: 700;
-	color: white;
+	color: #5A4A42;
 	text-align: center;
 	position: relative;
 	z-index: 1;
@@ -653,13 +653,13 @@ body {
 }
 
 .card-stat {
-	background: rgba(0, 0, 0, 0.3);
+	background: rgba(90, 74, 66, 0.12);
 	padding: 8px 12px;
 	border-radius: 12px;
 	text-align: center;
 	font-size: 0.95rem;
 	font-weight: 600;
-	color: white;
+	color: #5A4A42;
 	position: relative;
 	z-index: 1;
 	pointer-events: none;
