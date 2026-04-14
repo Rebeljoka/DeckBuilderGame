@@ -28,7 +28,7 @@ function enemyTurn() {
 				let blocked = Math.min(playerBlock, damage);
 				damage -= blocked;
 				playerBlock -= blocked;
-				enemyActions.push(`🛡️ Player's attack blocked for ${blocked} damage!`);
+				enemyActions.push(`🛡️ Player blocked ${blocked} damage!`);
 			}
 			playerHealth -= damage;
 			enemyActions.push(`⚔️ Enemy dealt ${damage} damage!`);
